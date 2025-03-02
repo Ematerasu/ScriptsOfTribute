@@ -50,7 +50,7 @@ jobs:
         zip -r ../../../Releases/${{ matrix.runtime }}/GameRunner-${{ matrix.runtime }}.zip .
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Packages-${{ matrix.runtime }}
         path: ./Releases/${{ matrix.runtime }}
@@ -60,7 +60,7 @@ jobs:
     needs: build
     steps:
     - name: Download artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         path: ./Releases
 
