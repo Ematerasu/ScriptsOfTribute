@@ -39,12 +39,24 @@ jobs:
     - name: Create Releases directory
       run: mkdir -p Releases/${{ matrix.runtime }}
 
-    - name: Zip Engine files
+    - name: Zip Engine files (Windows)
+      if: runner.os == 'Windows'
+      run: Compress-Archive -Path ./publish/Engine/${{ matrix.runtime }}/* -DestinationPath ./Releases/${{ matrix.runtime }}/Engine-${{ matrix.runtime }}.zip
+      shell: pwsh
+
+    - name: Zip Engine files (Linux/macOS)
+      if: runner.os != 'Windows'
       run: |
         cd ./publish/Engine/${{ matrix.runtime }}
         zip -r ../../../Releases/${{ matrix.runtime }}/Engine-${{ matrix.runtime }}.zip .
 
-    - name: Zip GameRunner files
+    - name: Zip GameRunner files (Windows)
+      if: runner.os == 'Windows'
+      run: Compress-Archive -Path ./publish/GameRunner/${{ matrix.runtime }}/* -DestinationPath ./Releases/${{ matrix.runtime }}/GameRunner-${{ matrix.runtime }}.zip
+      shell: pwsh
+
+    - name: Zip GameRunner files (Linux/macOS)
+      if: runner.os != 'Windows'
       run: |
         cd ./publish/GameRunner/${{ matrix.runtime }}
         zip -r ../../../Releases/${{ matrix.runtime }}/GameRunner-${{ matrix.runtime }}.zip .
